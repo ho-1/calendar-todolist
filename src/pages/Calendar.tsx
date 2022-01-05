@@ -3,15 +3,16 @@ import React, {useEffect, useState} from "react";
 const Calendar = () => {
   const [year, setYear] = useState<number>(2022);
   const [month, setMonth] = useState<number>(0);
-  const dayArray = ["일", "월", "화", "수", "목", "금", "토"];
   const [prevDateArr, setPrevDateArr] = useState<Array<number>>([]);
   const [dateArr, setDateArr] = useState<Array<number>>([]);
+  const [nextDateArr, setNextDateArr] = useState<Array<number>>([]);
   const today = new Date();
 
   useEffect(() => {
     refreshDate();
   }, [year, month]);
 
+  // 이전 혹은 다음달 달력 표시
   const refreshDate = () => {
     let lastMonthLastDate: number;
     if (month === 0) {
@@ -24,13 +25,14 @@ const Calendar = () => {
 
     setPrevDateArr(createPrevDateArr(thisMonth, lastMonthLastDate));
     setDateArr(createThisDateArr(thisMonthLastDate));
+
   }
 
   // 이전 달의 날짜배열 생성
   const createPrevDateArr = (thisMonth: Date, lastDate: number): number[] => {
     let list: number[] = [];
-    for (let n = 0; n < thisMonth.getDay(); n++) {
-      list[n] = lastDate;
+    for (let i = 0; i < thisMonth.getDay(); i++) {
+      list[i] = lastDate;
       lastDate -= 1;
     }
     list.reverse();
@@ -41,6 +43,16 @@ const Calendar = () => {
   const createThisDateArr = (thisMonthLastDate: number): number[] => {
     let list: number[] = [];
     for (let i = 0; i < thisMonthLastDate; i++) {
+      list[i] = i + 1;
+    }
+    return list;
+  }
+
+  // 다음 달의 날짜배열 생성
+  const createNextDateArr = (a: number, b:number): number[] => {
+    let list: number[] = [];
+    let sum = a + b;
+    for(let i = 0; i < sum; i++) {
       list[i] = i + 1;
     }
     return list;
@@ -94,10 +106,7 @@ const Calendar = () => {
         </div>
       </div>
       <div className="calendar-grid">
-        {dayArray.map(day => (
-          <div className="box" key={day}>{day}</div>
-        ))}
-
+        <div className="box">일</div><div className="box">월</div><div className="box">화</div><div className="box">수</div><div className="box">목</div><div className="box">금</div><div className="box">토</div>
         {prevDateArr.map(date => (
           <div className="box date prev" onClick={clickPrevMonth} key={date}>{date}</div>
         ))}
