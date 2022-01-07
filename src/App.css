@@ -39,5 +39,13 @@ body {
   gap: 1px;
 }
 
+/*
+list
+*/
+
+.todo-form {
+  display: flex;
+  flex-direction: column;
+}
 
 
