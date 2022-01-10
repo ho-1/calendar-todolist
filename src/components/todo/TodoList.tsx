@@ -5,18 +5,14 @@ type TodoListProps = {
 };
 
 const TodoList = ({ selectDate }: TodoListProps) => {
-  const [open, setOpen] = useState(false);
 
-  const onToggle = () => setOpen(!open);
 
-  // 선택된 날짜의 todolist 받아오기
+  const onClickEdit = (id: number): void => {
+    console.log("edit: " + id);
+  }
 
-  function DateInput() {
-    if (!selectDate) {
-      return <input type="date" />
-    } else {
-      return <input type="date" disabled/>
-    }
+  const onClickDelete = (id: number): void => {
+    console.log("delete: " + id);
   }
 
   return (
@@ -25,13 +21,24 @@ const TodoList = ({ selectDate }: TodoListProps) => {
         <h4>{!selectDate ? "" : selectDate + " Todo"}</h4>
       </div>
       <ul className="todo-list">
-        <li>context 추가하기</li>
+        <li className="todo-list__box">
+          <p>context 추가하기</p>
+          <div>
+            <button className="todo-button--edit" onClick={() => onClickEdit(1)}>수정</button>
+            <button className="todo-button--delete" onClick={() => onClickDelete(1)}>삭제</button>
+          </div>
+        </li>
+        <li className="todo-list__box">
+          <p>typescript 공부</p>
+          <div>
+            <button className="todo-button--edit">수정</button>
+            <button className="todo-button--delete">삭제</button>
+          </div>
+        </li>
       </ul>
-      <div className="todo-form">
-        <button onClick={onToggle}>{open ? "X" : "열기"}</button>
-        {open && <DateInput />}
-        {open && <input type="text" />}
-      </div>
+      <button className="todo-list__box" type="submit">
+        + 추가하기
+      </button>
     </>
   );
 };

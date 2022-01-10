@@ -1,7 +1,13 @@
+:root {
+  --text-color: white;
+  --background-color: #1b1f2c;
+}
+button { color: var(--text-color); }
+
 body {
   margin: 0;
-  color: white;
-  background-color: #242936;
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 .wrap {
@@ -10,38 +16,84 @@ body {
   max-width: 400px;
 }
 
-.box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  cursor: pointer;
-  color: white;
+/*
+현재 시각
+*/
+
+.timer {
+  padding: 16px 0;
 }
 
-.date { }
-.this { }
-.prev, .next { color: #515151; }
-.date:hover, .active { box-shadow: inset 0 0 4px #fff }
-
+/*
+달력
+ */
 .calendar-title {
+  padding: 16px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid #444444;
 }
 
+.calendar-title button {
+
+}
+
 .calendar-grid {
+  margin-bottom: 36px;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(7, 40px);
+  grid-template-columns: repeat(7, 54px);
+  grid-template-rows: repeat(7, 54px);
   gap: 1px;
+  color: var(--text-color);
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.date { cursor: pointer; }
+.this { }
+.prev, .next { color: #515151; }
+.date:hover, .active {
+  box-shadow: inset 0 0 4px #fff, inset 0 0 4px #fff
+}
+.today {
+  border-radius: 50%;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #5860ab;
 }
 
 /*
 list
 */
+
+.todo-list__box {
+  margin: 16px 0;
+  padding: 18px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 16px;
+  font-size: 16px;
+  color: var(--text-color);
+  background-color: #4e5660;
+}
+
+.todo-list__box[type="submit"]:hover {
+  background-color: #757a81;
+}
+
+.todo-button--delete {
+
+}
 
 .todo-form {
   display: flex;

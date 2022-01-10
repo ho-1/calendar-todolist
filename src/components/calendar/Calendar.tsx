@@ -91,7 +91,11 @@ const Calendar = ({ onClickDate }: CalendarProps) => {
 
   return (
     <>
-      <h5>오늘 : {today.getFullYear()}년 {today.getMonth()+1}월 {today.getDate()}일</h5>
+      <div className="timer">
+        <h5>
+          오늘 : {today.getFullYear()}년 {today.getMonth()+1}월 {today.getDate()}일
+        </h5>
+      </div>
       <div className="calendar-title">
         <button onClick={onClickPrevMonth}>&lt;</button>
         <h2>{year}년 {month + 1}월</h2>
