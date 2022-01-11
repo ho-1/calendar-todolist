@@ -43,7 +43,7 @@ body {
   margin-bottom: 36px;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(7, 54px);
+  grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 54px);
   gap: 1px;
   color: var(--text-color);

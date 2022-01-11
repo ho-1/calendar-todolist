@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+import {TodoDataInterface} from "./TodoDataInterface";
+import TodoItem from "./TodoItem";
 
 type TodoListProps = {
+  todoDataArray: TodoDataInterface[] | undefined,
   selectDate: number | undefined,
 };
 
-const TodoList = ({ selectDate }: TodoListProps) => {
-
+const TodoList = ({ todoDataArray, selectDate }: TodoListProps) => {
 
   const onClickEdit = (id: number): void => {
     console.log("edit: " + id);
@@ -21,24 +23,16 @@ const TodoList = ({ selectDate }: TodoListProps) => {
         <h4>{!selectDate ? "" : selectDate + " Todo"}</h4>
       </div>
       <ul className="todo-list">
-        <li className="todo-list__box">
-          <p>context 추가하기</p>
-          <div>
-            <button className="todo-button--edit" onClick={() => onClickEdit(1)}>수정</button>
-            <button className="todo-button--delete" onClick={() => onClickDelete(1)}>삭제</button>
-          </div>
-        </li>
-        <li className="todo-list__box">
-          <p>typescript 공부</p>
-          <div>
-            <button className="todo-button--edit">수정</button>
-            <button className="todo-button--delete">삭제</button>
-          </div>
-        </li>
+        {todoDataArray?.map((todoData: TodoDataInterface) =>
+          <TodoItem todoData={todoData} />
+        )}
       </ul>
-      <button className="todo-list__box" type="submit">
-        + 추가하기
-      </button>
+      {!selectDate ?
+        "" :
+        <button className="todo-list__box" type="submit">
+          + 추가하기
+        </button>
+      }
     </>
   );
 };
