@@ -4,7 +4,7 @@ import TodoItem from "./TodoItem";
 
 type TodoListProps = {
   todoDataArray: TodoDataInterface[] | undefined,
-  selectDate: number | undefined,
+  selectDate: string | undefined,
 };
 
 const TodoList = ({ todoDataArray, selectDate }: TodoListProps) => {
@@ -19,14 +19,28 @@ const TodoList = ({ todoDataArray, selectDate }: TodoListProps) => {
 
   return (
     <>
+      {/*타이틀*/}
       <div>
-        <h4>{!selectDate ? "" : selectDate + " Todo"}</h4>
+        <h4>{!selectDate ?
+          "" :
+          selectDate + " Todo"}</h4>
       </div>
+
+      {/*투두 리스트*/}
       <ul className="todo-list">
-        {todoDataArray?.map((todoData: TodoDataInterface) =>
-          <TodoItem todoData={todoData} />
-        )}
+        {
+          !selectDate
+          ? ""
+            // eslint-disable-next-line array-callback-return
+          : ( todoDataArray?.map(i => {
+                return i.endDate === selectDate ? <TodoItem todoData={i}/> : ""
+              })
+
+            )
+        }
       </ul>
+
+      {/*추가하기 버튼*/}
       {!selectDate ?
         "" :
         <button className="todo-list__box" type="submit">

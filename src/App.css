@@ -56,7 +56,7 @@ body {
   box-sizing: border-box;
 }
 
-.date { cursor: pointer; }
+.date { cursor: pointer; position: relative; }
 .this { }
 .prev, .next { color: #515151; }
 .date:hover, .active {
@@ -67,6 +67,16 @@ body {
   font-weight: bold;
   color: #ffffff;
   background-color: #5860ab;
+}
+
+.schedule:before {
+  position: absolute;
+  bottom: 6px;
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 10px;
+  background-color: white;
 }
 
 /*
@@ -86,10 +96,8 @@ list
   color: var(--text-color);
   background-color: #4e5660;
 }
-
-.todo-list__box[type="submit"]:hover {
-  background-color: #757a81;
-}
+.todo-list__box[type="submit"] { background-color: rgba(255, 255, 255, 0.09); }
+.todo-list__box[type="submit"]:hover { background-color: rgba(255, 255, 255, 0.1); }
 
 .todo-button--delete {
 

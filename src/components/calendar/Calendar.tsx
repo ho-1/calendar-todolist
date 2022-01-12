@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 
 type CalendarProps = {
+  schedule: Set<string> | undefined
   onClickDate(e: any): void
 }
 
-const Calendar = ({ onClickDate }: CalendarProps) => {
+const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
   const [year, setYear] = useState<number>(2022);
   const [month, setMonth] = useState<number>(0);
   const [prevDateArr, setPrevDateArr] = useState<Array<number>>([]);
@@ -27,15 +28,28 @@ const Calendar = ({ onClickDate }: CalendarProps) => {
       setPrevDateArr(createPrevDateArr(thisMonth, lastMonthLastDate));
       setDateArr(createThisDateArr(thisMonthLastDate));
     }
+
     refreshDate();
-
-    // todolist에서 날짜 검색 후 데이터가 하나라도 있으면 가지고 와서 element 에 스타일 추가
-
   }, [year, month]);
 
   useEffect(() => {
     setNextDateArr(createNextDateArr(prevDateArr.length, dateArr.length));
+    checkSchedule();
   }, [prevDateArr, dateArr]);
+
+  const checkSchedule = (): void => {
+    // class 초기화
+    let ele = document.querySelectorAll('.schedule');
+    ele.forEach(e => {
+      e.classList.remove('schedule');
+    })
+    // class 추가
+    schedule?.forEach(date => {
+      let id: HTMLElement | null = document.getElementById(date);
+      id?.classList.add('schedule');
+      console.log(id);
+    })
+  }
 
   // 이전 달의 날짜배열 생성
   const createPrevDateArr = (thisMonth: Date, lastDate: number): number[] => {
@@ -102,22 +116,28 @@ const Calendar = ({ onClickDate }: CalendarProps) => {
         <button onClick={onClickNextMonth}>&gt;</button>
       </div>
       <div className="calendar-grid">
+
+        {/*요일*/}
         <div className="box">일</div><div className="box">월</div><div className="box">화</div><div className="box">수</div><div className="box">목</div><div className="box">금</div><div className="box">토</div>
+
+        {/*이전날짜*/}
         {prevDateArr.map(date => (
           <div className="box date prev" onClick={onClickPrevMonth} key={date}>{date}</div>
         ))}
 
+        {/*현재날짜*/}
         {dateArr.map(date => (
           <div
             className="box date"
             onClick={onClickDate}
             key={date}
-            id={year+""+ (month < 9 ? "0"+(month+1) : month+1) +""+(date < 10 ? "0"+date : date)}
+            id={year+"-"+ (month < 9 ? "0"+(month+1) : month+1) +"-"+(date < 10 ? "0"+date : date)}
           >
             {date}
           </div>
         ))}
 
+        {/*다음날짜*/}
         {nextDateArr.map(date => (
           <div className="box date prev" onClick={onClickNextMonth} key={date}>{date}</div>
         ))}

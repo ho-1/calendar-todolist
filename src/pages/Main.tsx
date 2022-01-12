@@ -6,21 +6,40 @@ import {TodoDataInterface} from "../components/todo/TodoDataInterface";
 
 const Main = () => {
   const [todoDataArray, setTodoDataArray] = useState<TodoDataInterface[]>();
-  const [selectDate, setSelectDate] = useState<number>();
+  const [selectDate, setSelectDate] = useState<string>();
+  const [schedule, setSchedule] = useState<Set<string>>();
 
   useEffect(() => {
-
-    // 임시 값
-    setTodoDataArray([{
+    let data: TodoDataInterface[] = [{
       id: 1,
       text: '자바 공부',
       endDate: '2022-01-01',
+      done: false,
     }, {
       id: 2,
       text: '컴포넌트 패턴 공부',
       endDate: '2022-01-05',
-    }]);
-
+      done: false,
+    }, {
+      id: 3,
+      text: '컴포넌트 패턴 공부',
+      endDate: '2022-01-05',
+      done: true,
+    }, {
+      id: 4,
+      text: '리액트 공부',
+      endDate: '2022-02-13',
+      done: false,
+    }]
+    // 임시 값
+    let dates: Set<string> = new Set();
+    data.forEach((todo) => {
+      if (!todo.done) {
+        dates.add(todo.endDate);
+      }
+    })
+    setTodoDataArray(data);
+    setSchedule(dates);
   }, []);
 
   // 날짜 클릭
@@ -40,7 +59,7 @@ const Main = () => {
 
   return (
     <div className="wrap">
-      <Calendar onClickDate={onClickDate}/>
+      <Calendar schedule={schedule} onClickDate={onClickDate} />
       <TodoList todoDataArray={todoDataArray} selectDate={selectDate}/>
     </div>
   )
