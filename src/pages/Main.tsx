@@ -1,45 +1,59 @@
 import React, {useEffect, useState} from "react";
 import TodoList from "../components/todo/TodoList";
 import Calendar from "../components/calendar/Calendar";
-import {TodoDataInterface} from "../components/todo/TodoDataInterface";
+import {TodoDataEntity} from "../components/todo/TodoDataEntity";
 
+// 로컬스토리지에 데이터 저장
+const dataArr = [{
+  id: 1,
+  text: '자바 공부',
+  endDate: '2022-01-01',
+  done: false,
+}, {
+  id: 2,
+  text: '자바스크립트 고급강의',
+  endDate: '2022-01-05',
+  done: true,
+}, {
+  id: 3,
+  text: '컴포넌트 패턴 공부',
+  endDate: '2022-01-05',
+  done: true,
+}, {
+  id: 4,
+  text: '리액트 공부',
+  endDate: '2022-02-13',
+  done: false,
+}, {
+  id: 5,
+  text: '리액트 공부',
+  endDate: '2022-01-18',
+  done: false,
+}]
+localStorage.setItem("key", JSON.stringify(dataArr));
 
 const Main = () => {
-  const [todoDataArray, setTodoDataArray] = useState<TodoDataInterface[]>();
+  const [todoDataArray, setTodoDataArray] = useState<TodoDataEntity[]>();
   const [selectDate, setSelectDate] = useState<string>();
   const [schedule, setSchedule] = useState<Set<string>>();
 
   useEffect(() => {
-    let data: TodoDataInterface[] = [{
-      id: 1,
-      text: '자바 공부',
-      endDate: '2022-01-01',
-      done: false,
-    }, {
-      id: 2,
-      text: '컴포넌트 패턴 공부',
-      endDate: '2022-01-05',
-      done: false,
-    }, {
-      id: 3,
-      text: '컴포넌트 패턴 공부',
-      endDate: '2022-01-05',
-      done: true,
-    }, {
-      id: 4,
-      text: '리액트 공부',
-      endDate: '2022-02-13',
-      done: false,
-    }]
-    // 임시 값
-    let dates: Set<string> = new Set();
-    data.forEach((todo) => {
-      if (!todo.done) {
-        dates.add(todo.endDate);
-      }
-    })
-    setTodoDataArray(data);
-    setSchedule(dates);
+    // 로컬스토리지에서 데이터 불러옴
+    const localData = localStorage.getItem("key");
+
+    if (localData) {
+      const data: TodoDataEntity[] = JSON.parse(localData);
+      // endDate 값만 따로 모음
+      let dates: Set<string> = new Set();
+      data.forEach((todo) => {
+        if (!todo.done) {
+          dates.add(todo.endDate);
+        }
+      })
+
+      setTodoDataArray(data);
+      setSchedule(dates);
+    }
   }, []);
 
   // 날짜 클릭

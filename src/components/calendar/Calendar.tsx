@@ -38,16 +38,15 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
   }, [prevDateArr, dateArr]);
 
   const checkSchedule = (): void => {
-    // class 초기화
+    // 할 일 존재하는 class 초기화
     let ele = document.querySelectorAll('.schedule');
     ele.forEach(e => {
       e.classList.remove('schedule');
     })
-    // class 추가
+    // 할 일 존재하는 class 추가
     schedule?.forEach(date => {
       let id: HTMLElement | null = document.getElementById(date);
       id?.classList.add('schedule');
-      console.log(id);
     })
   }
 
@@ -83,7 +82,6 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
 
   // 다음달 선택 메소드
   const onClickNextMonth = (): void => {
-    console.log("증가");
     if (month === 11) {
       setYear(year + 1)
       setMonth(0);
@@ -94,7 +92,6 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
 
   // 이전달 선택 메소드
   const onClickPrevMonth = (): void => {
-    console.log("감소");
     if (month === 0) {
       setYear(year - 1);
       setMonth(11);

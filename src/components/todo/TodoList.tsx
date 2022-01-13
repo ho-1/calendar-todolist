@@ -1,21 +1,15 @@
 import React from "react";
-import {TodoDataInterface} from "./TodoDataInterface";
+import {TodoDataEntity} from "./TodoDataEntity";
 import TodoItem from "./TodoItem";
 
 type TodoListProps = {
-  todoDataArray: TodoDataInterface[] | undefined,
+  todoDataArray: TodoDataEntity[] | undefined,
   selectDate: string | undefined,
 };
 
 const TodoList = ({ todoDataArray, selectDate }: TodoListProps) => {
 
-  const onClickEdit = (id: number): void => {
-    console.log("edit: " + id);
-  }
 
-  const onClickDelete = (id: number): void => {
-    console.log("delete: " + id);
-  }
 
   return (
     <>
@@ -31,11 +25,9 @@ const TodoList = ({ todoDataArray, selectDate }: TodoListProps) => {
         {
           !selectDate
           ? ""
-            // eslint-disable-next-line array-callback-return
           : ( todoDataArray?.map(i => {
-                return i.endDate === selectDate ? <TodoItem todoData={i}/> : ""
+                return i.endDate === selectDate ? <TodoItem todoData={i} key={i.id}/> : ""
               })
-
             )
         }
       </ul>

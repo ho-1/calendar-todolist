@@ -1,4 +1,4 @@
-export interface TodoDataInterface {
+export interface TodoDataEntity {
     id: number,
     text: string,
     endDate: string,
