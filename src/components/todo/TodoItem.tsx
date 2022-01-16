@@ -1,8 +1,8 @@
 import React from 'react';
-import {TodoDataEntity} from "./TodoDataEntity";
+import {TodoEntity} from "./TodoEntity";
 
 type TodoItemProps = {
-  todoData: TodoDataEntity;
+  todoData: TodoEntity;
 }
 
 const TodoItem = ({ todoData }: TodoItemProps) => {

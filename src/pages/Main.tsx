@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import TodoList from "../components/todo/TodoList";
 import Calendar from "../components/calendar/Calendar";
-import {TodoDataEntity} from "../components/todo/TodoDataEntity";
+import {TodoEntity} from "../components/todo/TodoEntity";
 
 // 로컬스토리지에 데이터 저장
 const dataArr = [{
@@ -33,7 +33,7 @@ const dataArr = [{
 localStorage.setItem("key", JSON.stringify(dataArr));
 
 const Main = () => {
-  const [todoDataArray, setTodoDataArray] = useState<TodoDataEntity[]>();
+  const [todoDataArray, setTodoDataArray] = useState<TodoEntity[]>();
   const [selectDate, setSelectDate] = useState<string>();
   const [schedule, setSchedule] = useState<Set<string>>();
 
@@ -42,7 +42,7 @@ const Main = () => {
     const localData = localStorage.getItem("key");
 
     if (localData) {
-      const data: TodoDataEntity[] = JSON.parse(localData);
+      const data: TodoEntity[] = JSON.parse(localData);
       // endDate 값만 따로 모음
       let dates: Set<string> = new Set();
       data.forEach((todo) => {

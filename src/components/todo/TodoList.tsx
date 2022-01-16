@@ -1,9 +1,9 @@
 import React from "react";
-import {TodoDataEntity} from "./TodoDataEntity";
+import {TodoEntity} from "./TodoEntity";
 import TodoItem from "./TodoItem";
 
 type TodoListProps = {
-  todoDataArray: TodoDataEntity[] | undefined,
+  todoDataArray: TodoEntity[] | undefined,
   selectDate: string | undefined,
 };
 
