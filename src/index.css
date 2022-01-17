@@ -28,12 +28,12 @@ button:hover {
   border: 0;
 }
 input {
-  border: 0;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  /*border: 0;*/
+  /*-webkit-border-radius: 0;*/
+  /*-moz-border-radius: 0;*/
+  /*-webkit-appearance: none;*/
+  /*-moz-appearance: none;*/
+  /*appearance: none;*/
 }
 
 select {
@@ -44,3 +44,9 @@ select {
 /*
 reset - end
 */
+
+.flex-center-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

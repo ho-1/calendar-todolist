@@ -1,5 +1,5 @@
 export interface TodoEntity {
-    id: number,
+    id: string,
     text: string,
     endDate: string,
     done: boolean,
