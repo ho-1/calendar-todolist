@@ -9,8 +9,6 @@ type TodoListProps = {
 
 const TodoList = ({ todoDataArray, selectDate }: TodoListProps) => {
 
-
-
   return (
     <>
       {/*타이틀*/}
