@@ -19,7 +19,10 @@ const TodoItem = ({ todoData }: TodoItemProps) => {
 
   return (
     <li className="todo-list__box">
-      <p>{todoData.text}</p>
+      <div className="flex-center-center">
+        <input type="checkbox" id="todo0" name="todo0" checked={todoData.done} />
+        <p>{todoData.text}</p>
+      </div>
       <div>
         <button className="todo-button--edit" onClick={onClickEdit}>수정</button>
         <button className="todo-button--delete" onClick={onClickDelete}>삭제</button>
