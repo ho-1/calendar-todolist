@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import TodoList from "../components/todo/TodoList";
 import Calendar from "../components/calendar/Calendar";
 import {TodoEntity} from "../components/todo/TodoEntity";
+import { Link, Outlet } from 'react-router-dom';
 
 // 로컬스토리지에 데이터 저장
 const dataArr = [{
@@ -61,7 +62,7 @@ const Main = () => {
     let elems: Element | null = document.querySelector(".active");
     let ele: HTMLElement | null = document.getElementById(e.target.id);
     // 이전 active 정리
-    if(elems !==null){
+    if(elems !== null){
       elems.classList.remove("active");
     }
     // active 추가
@@ -73,6 +74,8 @@ const Main = () => {
 
   return (
     <div className="wrap">
+      <Outlet />
+      <Link to="/allTodo">모든 목록</Link>
       <Calendar schedule={schedule} onClickDate={onClickDate} />
       <TodoList todoDataArray={todoDataArray} selectDate={selectDate}/>
     </div>
