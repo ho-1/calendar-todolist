@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -44,9 +48,3 @@ select {
 /*
 reset - end
 */
-
-.flex-center-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
