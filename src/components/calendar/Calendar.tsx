@@ -36,6 +36,10 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
     checkSchedule();
   }, [prevCalendar, calendar]);
 
+  useEffect(() => {
+    checkSchedule();
+  }, [schedule])
+
   const checkSchedule = (): void => {
     // class 초기화
     let ele = document.querySelectorAll('.schedule');
