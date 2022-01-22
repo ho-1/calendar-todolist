@@ -6,12 +6,12 @@ type CalendarProps = {
 }
 
 const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
-  const [year, setYear] = useState<number>(2022);
-  const [month, setMonth] = useState<number>(0);
-  const [prevDateArr, setPrevDateArr] = useState<Array<number>>([]);
-  const [dateArr, setDateArr] = useState<Array<number>>([]);
-  const [nextDateArr, setNextDateArr] = useState<Array<number>>([]);
   const today = new Date();
+  const [year, setYear] = useState<number>(today.getFullYear());
+  const [month, setMonth] = useState<number>(today.getMonth());
+  const [prevCalendar, setPrevCalendar] = useState<Array<number>>([]);
+  const [calendar, setCalendar] = useState<Array<number>>([]);
+  const [nextCalendar, setNextCalendar] = useState<Array<number>>([]);
 
   useEffect(() => {
     // 달력 생성
@@ -25,25 +25,24 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
       const thisMonth = new Date(year, month);
       const thisMonthLastDate = new Date(year, month + 1, 0).getDate();
 
-      setPrevDateArr(createPrevDateArr(thisMonth, lastMonthLastDate));
-      setDateArr(createThisDateArr(thisMonthLastDate));
+      setPrevCalendar(createPrevCalendar(thisMonth, lastMonthLastDate));
+      setCalendar(createNowCalendar(thisMonthLastDate));
     }
-
     refreshDate();
   }, [year, month]);
 
   useEffect(() => {
-    setNextDateArr(createNextDateArr(prevDateArr.length, dateArr.length));
+    setNextCalendar(createNextCalendar(prevCalendar.length, calendar.length));
     checkSchedule();
-  }, [prevDateArr, dateArr]);
+  }, [prevCalendar, calendar]);
 
   const checkSchedule = (): void => {
-    // 할 일 존재하는 class 초기화
+    // class 초기화
     let ele = document.querySelectorAll('.schedule');
     ele.forEach(e => {
       e.classList.remove('schedule');
     })
-    // 할 일 존재하는 class 추가
+    // 할 일있는 날 class 추가
     schedule?.forEach(date => {
       let id: HTMLElement | null = document.getElementById(date);
       id?.classList.add('schedule');
@@ -51,7 +50,7 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
   }
 
   // 이전 달의 날짜배열 생성
-  const createPrevDateArr = (thisMonth: Date, lastDate: number): number[] => {
+  const createPrevCalendar = (thisMonth: Date, lastDate: number): number[] => {
     let list: number[] = [];
     for (let i = 0; i < thisMonth.getDay(); i++) {
       list[i] = lastDate;
@@ -62,7 +61,7 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
   }
 
   // 선택한 달의 날짜배열 생성
-  const createThisDateArr = (thisMonthLastDate: number): number[] => {
+  const createNowCalendar = (thisMonthLastDate: number): number[] => {
     let list: number[] = [];
     for (let i = 0; i < thisMonthLastDate; i++) {
       list[i] = i + 1;
@@ -71,7 +70,7 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
   }
 
   // 다음 달의 날짜배열 생성
-  const createNextDateArr = (a: number, b:number): number[] => {
+  const createNextCalendar = (a: number, b:number): number[] => {
     let list: number[] = [];
     let sum = 6*7 - (a + b);
     for(let i = 0; i < sum; i++) {
@@ -118,12 +117,18 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
         <div className="box">일</div><div className="box">월</div><div className="box">화</div><div className="box">수</div><div className="box">목</div><div className="box">금</div><div className="box">토</div>
 
         {/*이전날짜*/}
-        {prevDateArr.map(date => (
-          <div className="box date prev" onClick={onClickPrevMonth} key={date}>{date}</div>
+        {prevCalendar.map(date => (
+          <div
+            className="box date prev"
+            onClick={onClickPrevMonth}
+            key={date}
+          >
+            {date}
+          </div>
         ))}
 
         {/*현재날짜*/}
-        {dateArr.map(date => (
+        {calendar.map(date => (
           <div
             className="box date"
             onClick={onClickDate}
@@ -135,8 +140,14 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
         ))}
 
         {/*다음날짜*/}
-        {nextDateArr.map(date => (
-          <div className="box date prev" onClick={onClickNextMonth} key={date}>{date}</div>
+        {nextCalendar.map(date => (
+          <div
+            className="box date prev"
+            onClick={onClickNextMonth}
+            key={date}
+          >
+            {date}
+          </div>
         ))}
       </div>
     </>

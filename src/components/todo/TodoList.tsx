@@ -6,13 +6,12 @@ import TodoAdd from "./TodoAdd";
 type props = {
   todoDataArray: TodoEntity[] | undefined,
   selectDate: string | undefined,
+  addTodo(text: string, endDate: string): void,
+  deleteTodo(id: string): void,
+  checkTodo(id: string, isDone: boolean): void
 };
 
-const TodoList = ({ todoDataArray, selectDate }: props) => {
-
-
-
-
+const TodoList = ({ todoDataArray, selectDate, addTodo, deleteTodo, checkTodo }: props) => {
   return (
     <>
       <div>
@@ -27,13 +26,19 @@ const TodoList = ({ todoDataArray, selectDate }: props) => {
           !selectDate
           ? ""
           : ( todoDataArray?.map(i => {
-                return i.endDate === selectDate && <TodoItem todoData={i} key={i.id}/>
+                return i.endDate === selectDate &&
+                  <TodoItem
+                    todoData={i}
+                    key={i.id}
+                    deleteTodo={deleteTodo}
+                    checkTodo={checkTodo}
+                  />
               })
             )
         }
       </ul>
 
-      {!selectDate || <TodoAdd />}
+      {!selectDate || <TodoAdd selectDate={selectDate} addTodo={addTodo}/>}
     </>
   );
 };
