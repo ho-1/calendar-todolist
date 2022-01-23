@@ -22,7 +22,7 @@ const TodoItem = ({ todoData, deleteTodo, checkTodo }: props) => {
   }
 
   return (
-    <li className="todo-list__box">
+    <li className="todo-list__box" >
       <div className="flex justify-center items-center">
         <input
           type="checkbox"

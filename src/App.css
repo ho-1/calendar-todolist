@@ -109,6 +109,10 @@ list
   flex-direction: column;
 }
 
+.todo--checked {
+
+}
+
 .popup {
   position: absolute;
   top: 0;

@@ -65,13 +65,27 @@ const Main = () => {
     console.log(`create ${newTodo.text}, ${newTodo.endDate}, ${newTodo.id}`);
   }
 
-  // todo 삭제
+  // 삭제
   const deleteTodo = (id: string): void => {
-    console.log(id + ' delete');
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      const newTodo: TodoEntity[] = todoDataArray.filter((todo) => todo.id !== id);
+      setTodoDataArray(newTodo);
+      localStorage.setItem("key", JSON.stringify([...newTodo]));
+      console.log(id + ' delete');
+    }
   }
 
-  // todo 체크
+  // 체크
   const checkTodo = (id: string, isDone: boolean): void => {
+    let newTodo: TodoEntity[] = [];
+    todoDataArray.forEach((todo) => {
+      if (todo.id === id) {
+        todo.done = isDone;
+      }
+      newTodo.push(todo);
+    });
+    setTodoDataArray(newTodo);
+    localStorage.setItem("key", JSON.stringify([...newTodo]));
     console.log(id + ' ischeck? ' + isDone);
   }
 
