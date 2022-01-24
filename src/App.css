@@ -8,6 +8,7 @@ body {
   margin: 0;
   color: var(--text-color);
   background-color: var(--background-color);
+  touch-action: pan-x;
 }
 
 .wrap {
