@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import TodoList from "../components/todo/TodoList";
 import Calendar from "../components/calendar/Calendar";
 import {TodoEntity} from "../components/todo/TodoEntity";
-import { Link, Outlet } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import {Link} from 'react-router-dom';
+import {v4 as uuidv4} from 'uuid';
 
 const Main = () => {
   const [todoDataArray, setTodoDataArray] = useState<TodoEntity[]>(() => {
@@ -15,6 +15,7 @@ const Main = () => {
       return [];
     }
   });
+  const [viewData, setViewData] = useState<TodoEntity[]>();
   const [selectDate, setSelectDate] = useState<string>();
   const [schedule, setSchedule] = useState<Set<string>>();
 
@@ -35,7 +36,7 @@ const Main = () => {
     let active: Element | null = document.querySelector(".active");
     let clicked: HTMLElement | null = document.getElementById(e.target.id);
     // 이전 active 정리
-    if(active !== null){
+    if (active !== null) {
       active.classList.remove("active");
     }
     // active 추가
@@ -46,7 +47,7 @@ const Main = () => {
   }
 
   // 추가
-  const addTodo = (text: string, endDate: string): void => {
+  const addTodo = useCallback((text: string, endDate: string): void => {
     const id = uuidv4();
     const newTodo: TodoEntity = {
       id,
@@ -63,20 +64,20 @@ const Main = () => {
 
     localStorage.setItem("key", JSON.stringify([...todoDataArray, newTodo]));
     console.log(`create ${newTodo.text}, ${newTodo.endDate}, ${newTodo.id}`);
-  }
+  }, []);
 
   // 삭제
-  const deleteTodo = (id: string): void => {
+  const deleteTodo = useCallback((id: string): void => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       const newTodo: TodoEntity[] = todoDataArray.filter((todo) => todo.id !== id);
       setTodoDataArray(newTodo);
       localStorage.setItem("key", JSON.stringify([...newTodo]));
       console.log(id + ' delete');
     }
-  }
+  }, [todoDataArray]);
 
   // 체크
-  const checkTodo = (id: string, isDone: boolean): void => {
+  const checkTodo = useCallback((id: string, isDone: boolean): void => {
     let newTodo: TodoEntity[] = [];
     todoDataArray.forEach((todo) => {
       if (todo.id === id) {
@@ -87,11 +88,10 @@ const Main = () => {
     setTodoDataArray(newTodo);
     localStorage.setItem("key", JSON.stringify([...newTodo]));
     console.log(id + ' ischeck? ' + isDone);
-  }
+  }, [todoDataArray]);
 
   return (
     <div className="wrap">
-      <Outlet />
       <Link to="/allTodo">모든 목록</Link>
       <Calendar
         schedule={schedule}

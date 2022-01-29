@@ -44,4 +44,4 @@ const TodoItem = ({ todoData, deleteTodo, checkTodo }: props) => {
   );
 };
 
-export default TodoItem;
+export default React.memo(TodoItem);

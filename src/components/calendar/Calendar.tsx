@@ -158,4 +158,4 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
   );
 };
 
-export default Calendar;
+export default React.memo(Calendar);
