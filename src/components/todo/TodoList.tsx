@@ -2,9 +2,10 @@ import React, {useCallback} from "react";
 import {TodoEntity} from "./TodoEntity";
 import TodoItem from "./TodoItem";
 import TodoAdd from "./TodoAdd";
+import { List } from "react-virtualized";
 
 type props = {
-  todoDataArray: TodoEntity[] | undefined,
+  todoDataArray: TodoEntity[] | [],
   selectDate: string | undefined,
   addTodo(text: string, endDate: string): void,
   deleteTodo(id: string): void,
@@ -12,6 +13,23 @@ type props = {
 };
 
 const TodoList = ({todoDataArray, selectDate, addTodo, deleteTodo, checkTodo}: props) => {
+
+  const rowRenderer = useCallback(
+    ({index, key, style}) => {
+      const todo = todoDataArray[index];
+      return (
+        <TodoItem
+          todoData={todo}
+          key={key}
+          deleteTodo={deleteTodo}
+          checkTodo={checkTodo}
+          style={style}
+        />
+      );
+    },
+    [deleteTodo, checkTodo, todoDataArray],
+  );
+
   return (
     <>
       <div>
@@ -26,16 +44,15 @@ const TodoList = ({todoDataArray, selectDate, addTodo, deleteTodo, checkTodo}: p
         {
           !selectDate
           ? ""
-          : ( todoDataArray?.map(i => {
-                return i.endDate === selectDate &&
-                  <TodoItem
-                    todoData={i}
-                    key={i.id}
-                    deleteTodo={deleteTodo}
-                    checkTodo={checkTodo}
-                  />
-              })
-            )
+          : <List
+              width={368}
+              height={500}
+              rowCount={todoDataArray.length}
+              rowHeight={52}
+              rowRenderer={rowRenderer}
+              list={todoDataArray}
+              style={{ outline: 'none' }}
+            />
         }
       </ul>
     </>

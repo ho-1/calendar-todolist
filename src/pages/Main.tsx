@@ -15,7 +15,9 @@ const Main = () => {
       return [];
     }
   });
-  const [viewData, setViewData] = useState<TodoEntity[]>();
+  const [viewDatas, setViewDatas] = useState<TodoEntity[]>(() => {
+    return [];
+  });
   const [selectDate, setSelectDate] = useState<string>();
   const [schedule, setSchedule] = useState<Set<string>>();
 
@@ -31,6 +33,13 @@ const Main = () => {
     }
   }, [todoDataArray])
 
+  // 날짜 선택 시
+  // TodoList에 전달되는 viewDatas 배열 데이터 변경
+  useEffect(() => {
+    const filterDatas = todoDataArray?.filter(todo => todo.endDate === selectDate);
+    setViewDatas(filterDatas);
+  }, [selectDate, todoDataArray]);
+  
   // 날짜 클릭
   const onClickDate = (e: any): void => {
     let active: Element | null = document.querySelector(".active");
@@ -98,7 +107,7 @@ const Main = () => {
         onClickDate={onClickDate}
       />
       <TodoList
-        todoDataArray={todoDataArray}
+        todoDataArray={viewDatas}
         selectDate={selectDate}
         addTodo={addTodo}
         deleteTodo={deleteTodo}
