@@ -29,9 +29,7 @@ const TodoItem = ({ todoData, deleteTodo, checkTodo, style }: props) => {
         <input
           type="checkbox"
           checked={isChecked}
-          onChange={() => {
-            handleCheck(!isChecked);
-          }}
+          onChange={() => handleCheck(!isChecked)}
         />
         <p>{text}</p>
       </div>

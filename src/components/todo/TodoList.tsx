@@ -2,7 +2,7 @@ import React, {useCallback} from "react";
 import {TodoEntity} from "./TodoEntity";
 import TodoItem from "./TodoItem";
 import TodoAdd from "./TodoAdd";
-import { List } from "react-virtualized";
+import {WindowScroller, CellMeasurer, CellMeasurerCache, AutoSizer, List, ListRowProps} from 'react-virtualized';
 
 type props = {
   todoDataArray: TodoEntity[] | [],
@@ -15,11 +15,10 @@ type props = {
 const TodoList = ({todoDataArray, selectDate, addTodo, deleteTodo, checkTodo}: props) => {
 
   const rowRenderer = useCallback(
-    ({index, key, style}) => {
-      const todo = todoDataArray[index];
+    ({index, isScrolling, isVisible, key, style}) => {
       return (
         <TodoItem
-          todoData={todo}
+          todoData={todoDataArray[index]}
           key={key}
           deleteTodo={deleteTodo}
           checkTodo={checkTodo}
@@ -27,7 +26,7 @@ const TodoList = ({todoDataArray, selectDate, addTodo, deleteTodo, checkTodo}: p
         />
       );
     },
-    [deleteTodo, checkTodo, todoDataArray],
+    [deleteTodo, checkTodo, todoDataArray, addTodo],
   );
 
   return (
@@ -44,15 +43,37 @@ const TodoList = ({todoDataArray, selectDate, addTodo, deleteTodo, checkTodo}: p
         {
           !selectDate
           ? ""
-          : <List
-              width={368}
-              height={500}
-              rowCount={todoDataArray.length}
-              rowHeight={52}
-              rowRenderer={rowRenderer}
-              list={todoDataArray}
-              style={{ outline: 'none' }}
-            />
+          : (
+
+              <WindowScroller>
+                {({height, isScrolling, registerChild, onChildScroll, scrollTop}) => (
+                  <AutoSizer disableHeight>
+                    {({ width }) => (
+                      <div ref={registerChild}>
+                        <List
+                          autoHeight
+                          height={height}
+                          isScrolling={isScrolling}
+                          onScroll={onChildScroll}
+                          overscanRowCount={2}
+
+                          rowCount={todoDataArray.length}
+                          rowHeight={84}
+                          rowRenderer={rowRenderer}
+
+                          scrollToIndex={-1}
+                          scrollTop={scrollTop}
+
+                          style={{ outline: 'none' }}
+                          width={width}
+                        />
+                      </div>
+                    )}
+                  </AutoSizer>
+                )}
+              </WindowScroller>
+
+            )
         }
       </ul>
     </>
