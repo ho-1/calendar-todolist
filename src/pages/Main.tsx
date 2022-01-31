@@ -73,7 +73,7 @@ const Main = () => {
 
     localStorage.setItem("key", JSON.stringify([...todoDataArray, newTodo]));
     console.log(`create ${newTodo.text}, ${newTodo.endDate}, ${newTodo.id}`);
-  }, []);
+  }, [todoDataArray]);
 
   // 삭제
   const deleteTodo = useCallback((id: string): void => {

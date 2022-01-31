@@ -61,7 +61,7 @@ const TodoList = ({todoDataArray, selectDate, addTodo, deleteTodo, checkTodo}: p
                           rowHeight={84}
                           rowRenderer={rowRenderer}
 
-                          scrollToIndex={-1}
+                          scrollToIndex={1}
                           scrollTop={scrollTop}
 
                           style={{ outline: 'none' }}

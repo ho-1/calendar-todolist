@@ -2,14 +2,13 @@ import React, {useState} from 'react';
 import {TodoEntity} from "./TodoEntity";
 
 type props = {
-  todoData: TodoEntity | undefined,
+  todoData: TodoEntity,
   deleteTodo(id: string): void,
   checkTodo(id: string, isDone: boolean): void,
   style: any
 }
 
 const TodoItem = ({ todoData, deleteTodo, checkTodo, style }: props) => {
-  // @ts-ignore
   const { id, text, done } = todoData;
 
   const [isChecked, serIsChecked] = useState(done);
