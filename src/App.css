@@ -85,7 +85,8 @@ list
 */
 
 .todo-list__box {
-  margin: 16px 0;
+  height: 68px !important;
+  margin-bottom: 16px;
   padding: 18px 16px;
   width: 100%;
   box-sizing: border-box;

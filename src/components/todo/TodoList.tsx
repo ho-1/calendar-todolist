@@ -31,7 +31,7 @@ const TodoList = ({todoDataArray, selectDate, addTodo, deleteTodo, checkTodo}: p
 
   return (
     <>
-      <div>
+      <div style={{ marginBottom: '16px' }}>
         <h4>{
           (selectDate && selectDate !== "all") && selectDate + " Todo"
         }</h4>
@@ -64,7 +64,9 @@ const TodoList = ({todoDataArray, selectDate, addTodo, deleteTodo, checkTodo}: p
                           scrollToIndex={1}
                           scrollTop={scrollTop}
 
-                          style={{ outline: 'none' }}
+                          style={{
+                            outline: 'none'
+                          }}
                           width={width}
                         />
                       </div>
