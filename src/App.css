@@ -63,11 +63,12 @@ body {
 .date:hover, .active {
   box-shadow: inset 0 0 4px #fff, inset 0 0 4px #fff
 }
+
 .today {
   border-radius: 50%;
   font-weight: bold;
   color: #ffffff;
-  background-color: #5860ab;
+  border: 2px solid #8fcb71;
 }
 
 .schedule:before {

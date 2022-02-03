@@ -34,6 +34,11 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
   useEffect(() => {
     setNextCalendar(createNextCalendar(prevCalendar.length, calendar.length));
     checkSchedule();
+
+    // 오늘 날짜 표시
+    document.querySelector(".today")?.classList.remove("today");
+    const todayEle = document.getElementById(today.toISOString().split("T")[0]);
+    todayEle?.classList.add("today");
   }, [prevCalendar, calendar]);
 
   useEffect(() => {
