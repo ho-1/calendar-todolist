@@ -18,6 +18,7 @@ const TodoList = ({todoDataArray, selectDate, addTodo, deleteTodo, checkTodo}: p
     ({index, isScrolling, isVisible, key, style}) => {
       return (
         <TodoItem
+          index={index}
           todoData={todoDataArray[index]}
           key={key}
           deleteTodo={deleteTodo}
