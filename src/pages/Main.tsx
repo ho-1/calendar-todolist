@@ -14,12 +14,23 @@ const Main = () => {
     } else {
       return [];
     }
+    // const arr = [];
+    // for(let i = 0; i < 2500; i++) {
+    //   let ob={
+    //     id: i+"",
+    //     text: "할일입니다" + i,
+    //     endDate: "2022-02-01",
+    //     done: false,
+    //   };
+    //   arr.push(ob);
+    // }
+    // return arr;
   });
-  const [viewDatas, setViewDatas] = useState<TodoEntity[]>(() => {
+  const [viewDatas, setViewDatas] = useState<TodoEntity[]>(() => { // 보여줄 리스트의 배열
     return [];
   });
-  const [selectDate, setSelectDate] = useState<string>();
-  const [schedule, setSchedule] = useState<Set<string>>();
+  const [selectDate, setSelectDate] = useState<string>(); // 사용자가 선택한 날짜
+  const [schedule, setSchedule] = useState<Set<string>>(); // 할 일이 있는 날짜의 배열
 
   useEffect(() => {
     if (todoDataArray) {
@@ -33,26 +44,27 @@ const Main = () => {
     }
   }, [todoDataArray])
 
-  // 날짜 선택 시
-  // TodoList에 전달되는 viewDatas 배열 데이터 변경
+  // 날짜 선택 시 TodoList에 전달되는 viewDatas 배열 데이터 변경
   useEffect(() => {
     const filterDatas = todoDataArray?.filter(todo => todo.endDate === selectDate);
     setViewDatas(filterDatas);
   }, [selectDate, todoDataArray]);
   
   // 날짜 클릭
-  const onClickDate = (e: any): void => {
-    let active: Element | null = document.querySelector(".active");
-    let clicked: HTMLElement | null = document.getElementById(e.target.id);
-    // 이전 active 정리
-    if (active !== null) {
-      active.classList.remove("active");
+  const onClickDate = (date: string): void => {
+    if (date !== selectDate) {
+      // 이전 active 정리
+      const active: Element | null = document.querySelector(".active");
+      if (active !== null) {
+        active.classList.remove("active");
+      }
+      const clicked: HTMLElement | null = document.getElementById(date);
+      // active 추가
+      if (clicked !== null) {
+        clicked.classList.add("active");
+      }
+      setSelectDate(date);
     }
-    // active 추가
-    if (clicked !== null) {
-      clicked.classList.add("active");
-    }
-    setSelectDate(e.target.id);
   }
 
   // 추가

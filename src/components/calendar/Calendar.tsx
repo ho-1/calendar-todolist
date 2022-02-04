@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
+import fire from "../../assets/Fire.svg";
 
 type CalendarProps = {
   schedule: Set<string> | undefined
-  onClickDate(e: any): void
+  onClickDate(date: string): void
 }
 
 const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
@@ -10,7 +11,7 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
   const [year, setYear] = useState<number>(today.getFullYear());
   const [month, setMonth] = useState<number>(today.getMonth());
   const [prevCalendar, setPrevCalendar] = useState<Array<number>>([]);
-  const [calendar, setCalendar] = useState<Array<number>>([]);
+  const [calendar, setCalendar] = useState<Array<string>>([]);
   const [nextCalendar, setNextCalendar] = useState<Array<number>>([]);
 
   useEffect(() => {
@@ -45,6 +46,7 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
     checkSchedule();
   }, [schedule])
 
+  // 스케쥴 체크
   const checkSchedule = (): void => {
     // class 초기화
     let ele = document.querySelectorAll('.schedule');
@@ -54,7 +56,7 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
     // 할 일있는 날 class 추가
     schedule?.forEach(date => {
       let id: HTMLElement | null = document.getElementById(date);
-      id?.classList.add('schedule');
+      // id?.classList.add('schedule');
     })
   }
 
@@ -70,10 +72,11 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
   }
 
   // 선택한 달의 날짜배열 생성
-  const createNowCalendar = (thisMonthLastDate: number): number[] => {
-    let list: number[] = [];
-    for (let i = 0; i < thisMonthLastDate; i++) {
-      list[i] = i + 1;
+  const createNowCalendar = (thisMonthLastDate: number): string[] => {
+    let list: string[] = [];
+    const frontstr = year+"-"+ (month < 9 ? "0"+(month+1) : month+1) +"-";
+    for (let i = 1; i < thisMonthLastDate+1; i++) {
+      list[i-1] = frontstr + (i < 10 ? "0" + i : i);
     }
     return list;
   }
@@ -137,16 +140,21 @@ const Calendar = ({ schedule, onClickDate }: CalendarProps) => {
         ))}
 
         {/*현재날짜*/}
-        {calendar.map(date => (
-          <div
-            className="box date"
-            onClick={onClickDate}
-            key={date}
-            id={year+"-"+ (month < 9 ? "0"+(month+1) : month+1) +"-"+(date < 10 ? "0"+date : date)}
-          >
-            {date}
-          </div>
-        ))}
+        {calendar.map((date, index) => {
+          return (
+            <div
+              className="box date"
+              onClick={() => {onClickDate(date)}}
+              key={date}
+              id={date}
+            >
+              {index < 9 ? date.substring(9, 10) : date.substring(8, 10)}
+              {schedule?.has(date) && (
+                <img className="fire" src={fire} alt="할일있음" />
+              )}
+            </div>
+          )
+        })}
 
         {/*다음날짜*/}
         {nextCalendar.map(date => (

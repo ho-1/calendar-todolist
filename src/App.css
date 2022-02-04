@@ -81,6 +81,12 @@ body {
   background-color: #F24E4E;
 }
 
+.fire {
+  position: absolute;
+  bottom: 8px;
+  z-index: -1;
+}
+
 /*
 list
 */
