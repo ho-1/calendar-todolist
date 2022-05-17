@@ -113,7 +113,6 @@ const Main = () => {
 
   return (
     <div className="wrap">
-      <Link to="/allTodo">모든 목록</Link>
       <Calendar
         schedule={schedule}
         onClickDate={onClickDate}
